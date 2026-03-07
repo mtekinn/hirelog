@@ -2,6 +2,7 @@ package com.example.hirelog.controller;
 
 import com.example.hirelog.dto.LoginRequest;
 import com.example.hirelog.dto.LoginResponse;
+import com.example.hirelog.dto.UserResponse;
 import com.example.hirelog.entity.User;
 import com.example.hirelog.repository.UserRepository;
 import com.example.hirelog.security.JwtUtil;
@@ -27,9 +28,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public UserResponse register(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return new UserResponse(savedUser.getId(), savedUser.getName(), savedUser.getEmail());
     }
 
     @PostMapping("/login")
