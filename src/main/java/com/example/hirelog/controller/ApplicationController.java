@@ -1,6 +1,7 @@
 package com.example.hirelog.controller;
 
 import com.example.hirelog.dto.ApplicationResponse;
+import com.example.hirelog.dto.SummaryResponse;
 import com.example.hirelog.entity.Application;
 import com.example.hirelog.service.ApplicationService;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,11 @@ public class ApplicationController {
     @GetMapping
     public List<ApplicationResponse> getAllApplications() {
         return applicationService.getAllApplications();
+    }
+
+    @GetMapping("/summary/{userId}")
+    public SummaryResponse getSummary(@PathVariable Long userId) {
+        return applicationService.getSummary(userId);
     }
 
     @PostMapping
