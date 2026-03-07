@@ -18,8 +18,8 @@ public class ApplicationController {
     }
 
     @GetMapping
-    public List<ApplicationResponse> getAllApplications() {
-        return applicationService.getAllApplications();
+    public List<ApplicationResponse> getAllApplications(@RequestParam Long userId) {
+        return applicationService.getAllApplications(userId);
     }
 
     @GetMapping("/summary/{userId}")

@@ -17,8 +17,8 @@ public class ApplicationService {
         this.applicationRepository = applicationRepository;
     }
 
-    public List<ApplicationResponse> getAllApplications() {
-        return applicationRepository.findAll()
+    public List<ApplicationResponse> getAllApplications(Long userId) {
+        return applicationRepository.findByUserId(userId)
                 .stream()
                 .map(app -> new ApplicationResponse(
                         app.getId(),
@@ -67,9 +67,7 @@ public class ApplicationService {
                 .count();
 
         double replyRate = (double) repliedCount / total * 100;
-
         SummaryResponse sr = new SummaryResponse(total, appliedCount, interviewCount, offerCount, rejectedCount, replyRate);
-
         return sr;
     }
 
