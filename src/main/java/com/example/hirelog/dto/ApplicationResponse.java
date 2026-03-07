@@ -1,13 +1,8 @@
-package com.example.hirelog.entity;
+package com.example.hirelog.dto;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "application")
-public class Application {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ApplicationResponse {
     private long id;
     private String jobName;
     private String status;
@@ -16,14 +11,9 @@ public class Application {
     private LocalDate appliedDate;
     private String notes;
     private boolean didReply;
+    private long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public Application() {}
-
-    public Application(long id, String jobName, String status, String companyName, String companyWeb, LocalDate appliedDate, String notes, boolean didReply) {
+    public ApplicationResponse(long id, String jobName, String status, String companyName, String companyWeb, LocalDate appliedDate, String notes, boolean didReply, long userId) {
         this.id = id;
         this.jobName = jobName;
         this.status = status;
@@ -32,14 +22,7 @@ public class Application {
         this.appliedDate = appliedDate;
         this.notes = notes;
         this.didReply = didReply;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+        this.userId = userId;
     }
 
     public long getId() {
@@ -104,5 +87,13 @@ public class Application {
 
     public void setDidReply(boolean didReply) {
         this.didReply = didReply;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
