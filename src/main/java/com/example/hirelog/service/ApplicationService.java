@@ -38,6 +38,24 @@ public class ApplicationService {
         return applicationRepository.save(application);
     }
 
+    public ApplicationResponse updateStatus(Long id, String status) {
+        Application current = applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Başvuru bulunamadı"));
+        current.setStatus(status);
+        Application saved = applicationRepository.save(current);
+
+        ApplicationResponse ar = new ApplicationResponse(id,
+                current.getJobName(),
+                status,
+                current.getCompanyName(),
+                current.getCompanyWeb(),
+                current.getAppliedDate(),
+                current.getNotes(),
+                current.isDidReply(),
+                current.getUser().getId());
+        return ar;
+    }
+
     public void deleteApplication(Long id) {
         applicationRepository.deleteById(id);
     }

@@ -32,6 +32,12 @@ public class ApplicationController {
         return applicationService.createApplication(application);
     }
 
+    @PatchMapping("/{id}/status")
+    public ApplicationResponse updateStatus(@PathVariable Long id,
+                                            @RequestBody String status) {
+        return applicationService.updateStatus(id, status);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteApplication(@PathVariable Long id) {
         applicationService.deleteApplication(id);
