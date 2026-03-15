@@ -1,8 +1,9 @@
 package com.example.hirelog.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ApplicationResponse {
+public class ApplicationResponse implements Serializable {
     private long id;
     private String jobName;
     private String status;
@@ -12,6 +13,8 @@ public class ApplicationResponse {
     private String notes;
     private boolean didReply;
     private long userId;
+
+    public ApplicationResponse() {}
 
     public ApplicationResponse(long id, String jobName, String status, String companyName, String companyWeb, LocalDate appliedDate, String notes, boolean didReply, long userId) {
         this.id = id;
