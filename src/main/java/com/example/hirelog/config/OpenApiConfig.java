@@ -8,6 +8,8 @@ import io.swagger.v3.oas.models.Components;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 public class OpenApiConfig {
 
@@ -24,6 +26,10 @@ public class OpenApiConfig {
                                 new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
-                                        .bearerFormat("JWT")));
+                                        .bearerFormat("JWT")))
+                .servers(List.of(
+                        new io.swagger.v3.oas.models.servers.Server()
+                                .url("https://hirelog-production.up.railway.app")
+                                .description("Production")));
     }
 }
