@@ -1,23 +1,30 @@
 # HireLog - Job Application Tracker API
 
-A RESTful API built with Spring Boot for tracking job applications. Never lose track of where you applied.
+A production-ready RESTful API built with Spring Boot for tracking job applications. Deployed on Railway with Redis caching, rate limiting, and CI/CD pipeline.
+
+🔗 **Live API:** https://hirelog-production.up.railway.app  
+📖 **Swagger UI:** https://hirelog-production.up.railway.app/swagger-ui/index.html
 
 ## Tech Stack
 
-- Java 22
-- Spring Boot 3.5
-- Spring Security + JWT
-- PostgreSQL
-- Docker
-- Maven
+- **Java 22** + **Spring Boot 3.5**
+- **Spring Security** + **JWT Authentication**
+- **PostgreSQL** — persistent storage
+- **Redis** — caching & rate limiting
+- **Docker** + **Docker Compose**
+- **GitHub Actions** — CI/CD pipeline
+- **Railway** — cloud deployment
 
 ## Features
 
-- User registration and login with JWT authentication
-- BCrypt password hashing
-- Track job applications with status updates
-- Filter applications by user
-- Financial summary with reply rate statistics
+- JWT-based authentication with BCrypt password hashing
+- Track job applications with status updates (APPLIED, INTERVIEW, OFFER, REJECTED)
+- Redis caching for application queries — reduces DB load
+- Redis-based rate limiting — 60 requests/minute per IP
+- Application summary with reply rate statistics
+- Swagger UI for interactive API documentation
+- Automated CI/CD with GitHub Actions
+- Deployed to Railway with managed PostgreSQL and Redis
 
 ## Getting Started
 
@@ -26,13 +33,20 @@ A RESTful API built with Spring Boot for tracking job applications. Never lose t
 - Java 22
 - Docker
 
-### Run the database
+### Run locally
 ```bash
-docker run --name hirelog-db -e POSTGRES_PASSWORD=1234 -e POSTGRES_DB=hirelogdb -p 5434:5432 -d postgres
-```
+# Clone the repository
+git clone https://github.com/mtekinn/hirelog.git
+cd hirelog
 
-### Run the application
-```bash
+# Copy and configure environment variables
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+# Edit application.properties with your values
+
+# Start PostgreSQL and Redis
+docker-compose up -d
+
+# Run the application
 ./mvnw spring-boot:run
 ```
 
@@ -53,6 +67,11 @@ docker run --name hirelog-db -e POSTGRES_PASSWORD=1234 -e POSTGRES_DB=hirelogdb 
 | DELETE | /api/applications/{id} | Delete an application |
 | GET | /api/applications/summary/{userId} | Get application summary |
 
+### System
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /health | Health check |
+
 ## Authentication
 
 All endpoints except `/api/auth/**` require a JWT token:
@@ -63,3 +82,15 @@ Authorization: Bearer <token>
 ## Status Values
 
 `APPLIED` `INTERVIEW` `OFFER` `REJECTED`
+
+## Architecture
+```
+Client → Rate Limit Filter (Redis) → JWT Filter → Controller → Service → Repository → PostgreSQL
+                                                                    ↕
+                                                                  Redis Cache
+```
+
+## Running Tests
+```bash
+./mvnw test
+```
