@@ -2,9 +2,8 @@
 
 A production-ready RESTful API built with Spring Boot for tracking job applications. Deployed on Railway with Redis caching, rate limiting, and CI/CD pipeline.
 
-🔗 **Live API:** https://hirelog-production.up.railway.app  
+🔗🔗 **Live API:** https://hirelog-production.up.railway.app/health  
 📖 **Swagger UI:** https://hirelog-production.up.railway.app/swagger-ui/index.html
-
 ## Tech Stack
 
 - **Java 22** + **Spring Boot 3.5**
